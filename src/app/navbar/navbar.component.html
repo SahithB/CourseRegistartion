@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark p-0">
+  <div class="container">
+    <a *ngIf="!authservice.isLoggedIn()" routerLink="/login" class="navbar-brand">RManagement</a>
+    <a *ngIf="!!authservice.isLoggedIn()" routerLink="/" class="navbar-brand">RManagement</a>
+    <button type="button" class="btn btn-outline-primary d-block d-sm-none" (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapse">
+     <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapse" [ngbCollapse]="isCollapsed">
+      <ul *ngIf="!!authservice.isLoggedIn()" class="navbar-nav">
+        <li class="nav-item px-2">
+          <a routerLink="/" class="nav-link">Dashboard</a>
+        </li>
+        <li class="nav-item px-2">
+          <a routerLink="/courses" class="nav-link">Courses</a>
+        </li>
+        <li class="nav-item px-2">
+          <a routerLink="/registrations" class="nav-link">Registrations</a>
+        </li>
+      </ul>
+
+      <ul ngbDropdown class="navbar-nav ml-auto">
+        <li *ngIf="!!authservice.isLoggedIn()" class="nav-item dropdown mr-3">
+          <a ngbDropdownToggle class="nav-link dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-user"></i> Welcome Admin
+          </a>
+          <div ngbDropdownMenu class="dropdown-menu">
+            <a (click)="!!authservice.logout()" routerLink="/login"   class="dropdown-item">
+              <i class="fa fa-user-times"></i> Logout
+            </a>
+          </div>
+        </li>
+        <li *ngIf="!authservice.isLoggedIn()">
+          <a routerLink="/login" class="nav-link">
+            <i class="fa fa-sign-in"></i> Login</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>

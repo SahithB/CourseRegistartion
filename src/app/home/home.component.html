@@ -1,0 +1,77 @@
+<header id="main-header" class="py-2 ml-auto bg-primary text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fa fa-gear"></i> Dashboard</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="action" class="py-4 mb-4 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <a routerLink="/courses/new" class="btn btn-success btn-block">
+          <i class="fa fa-plus"></i> Add Course
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a routerLink="/registrations/new" class="btn btn-warning btn-block">
+          <i class="fa fa-plus"></i> Add Student
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="posts">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header">
+            <h4>Latest Registrations</h4>
+          </div>  
+          <table class="table" *ngIf="registrations?.length>0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Date Of Joining</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of registrations">
+                <td>{{c.student.name}}</td>
+                <td>{{c.course.name}}</td>
+                <td>{{c.joiningDate|date}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="text-align:center; margin: 10px;" *ngIf="registrations?.length==0">No Registrations Availale at the moment</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center bg-primary text-white mb-3">
+          <div class="card-body">
+            <h3>Courses</h3>
+            <h1 class="display-4">
+              <i class="fa fa-book"></i> {{clen}}
+            </h1>
+            <a routerLink="/courses" class="btn btn-outline-light btn-sm">View</a>
+          </div>l
+        </div>
+        <div class="card text-center bg-warning text-white mb-3">
+          <div class="card-body">
+            <h3>Registrations</h3>
+            <h1 class="display-4">
+              <i class="fa fa-users"></i> {{rlen}}
+            </h1>
+            <a routerLink="/registrations" class="btn btn-outline-light btn-sm">View</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

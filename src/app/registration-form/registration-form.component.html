@@ -1,0 +1,118 @@
+<header id="main-header"  class="py-2 ml-auto bg-success text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fa fa-pencil"></i> Register </h1>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="container py-3 px-5">
+  <div class="row">
+    <div class="col-md-6">
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <div class="form-group">
+          <label for="name">Student Name</label>
+          <input class="form-control" formControlName="name" placeholder="Enter course name">
+          <div class="alert alert-danger" *ngIf="name.touched && !name.valid">
+            <div *ngIf="!!name.errors.required">
+              Name is required
+            </div>
+            <div *ngIf="!!name.errors.minlength || !!name.errors.maxlength ">
+              Name must be in the range of 3 to 55 characters long
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="Email">Email</label>
+          <input class="form-control" formControlName="email" placeholder="Email">
+          <div class="alert alert-danger" *ngIf="email.touched && !email.valid">
+            <div *ngIf="!!email.errors.required">
+              Email is required
+            </div>
+            <div *ngIf="!!email.errors.email">
+              Please enter a valid email
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text" class="form-control" formControlName="address" placeholder="address">
+          <div class="alert alert-danger" *ngIf="address.touched && !address.valid">
+            <div *ngIf="!!address.errors.required">
+              address is required
+            </div>
+            <div *ngIf="!!address.errors.minlength || !!address.errors.maxlength">
+              Address must be in the range of 5 to 55 characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="text" pattern = "^[789]\d{9}$" class="form-control" formControlName="phone" placeholder="phone">
+          <div class="alert alert-danger" *ngIf="phone.touched && !phone.valid">
+            <div *ngIf="!!phone.errors.required">
+              Phone is required
+            </div>
+            <div *ngIf="!!phone.errors.pattern">
+              please enter a valid phone number
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label" for="courseId">Select Course</label>
+          <div>
+            <select id="courseId" class="form-control" formControlName="courseId">
+              <option value=''>Select course</option>
+              <option [value]=c._id *ngFor="let c of courses$|async" >{{c.name}}</option>
+            </select>
+            <div class="alert alert-danger" *ngIf="courseId.touched && !courseId.valid">
+              <div *ngIf="!!courseId.errors.required">
+                Course is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <label>Mode of Payment</label>
+          <div class="radio">
+            <p>
+              <input type="radio" formControlName="modeOfPayment" value=Full> Full 
+            <span *ngIf="payment_flag">
+              <input type="radio"  formControlName="modeOfPayment"  value=Installments> Installments 
+            </span>
+              <span *ngIf="payment_flag"><small class="text-muted">(Availabe plan: {{coursechosen?.allowedInstallments}} months)</small></span>
+            
+              <small>
+                <p *ngIf="!payment_flag && courseId.value != ''"><i><span style="color:red ; font-weight:bold">*</span>Installments are not allowed for the selected course</i></p>
+              </small>
+            </p>
+        </div>
+        
+        <div class="form-group" *ngIf="isEMICheck">
+          <label class="control-label" for="EMI">EMI Paid</label>
+          <div>
+            <select id="EMI" class="form-control" formControlName="installmentpaid">
+              <option value="">Select EMI</option>
+              <option *ngFor="let item of noOfEMIs(coursechosen?.allowedInstallments); let i = index" [value]=i+1>{{i+1}} </option>
+            </select>
+          </div>
+          <div class="alert alert-danger" *ngIf="installmentpaid.touched && !installmentpaid.valid">
+            <div *ngIf="!!installmentpaid.errors.required">
+              EMI selection is required
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mr-1" [disabled]=!form.valid>Save</button>
+        <button type="button" *ngIf="id" (click)="delete()" class="btn btn-danger mr-2">Delete</button>
+        <button type="reset" *ngIf="!id" class="btn btn-danger mr-2">Reset</button>
+      </form>
+    </div>
+    <div class=" container col-md-4 d-none d-lg-block" style="padding-top:5em">
+      <img class="img-responsive" src="assets/images/registration.png" />
+    </div>
+
+
+  </div>
+</div>

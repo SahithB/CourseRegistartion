@@ -1,0 +1,60 @@
+<header id="main-header" class="py-2 bg-warning text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>
+          <i class="fa fa-book"></i> Courses</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="action" class="py-4 mb-4 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 ml-auto">
+        <div class="input-group">
+          <input type="text" #query (keyup)="filter(query.value)" class="form-control" placeholder="Search...">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="courses">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h4>Latest Courses</h4>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Faculty</th>
+                <th>Fee</th>
+                <th>Available Batch Size</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of filteredCourses">
+                <td>{{c.name}}</td>
+                <td>{{c.faculty}}</td>
+                <td>{{c.fees|currency:'INR':'symbol'}}</td>
+                <td>{{c.batchSizeAvl}}</td>
+                <td colspan="2" style="color:white">
+                  <a [routerLink]="['/courses/',c._id]" class="btn btn-secondary">
+                    <i class="fa fa-angle-double-right"></i> Edit
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

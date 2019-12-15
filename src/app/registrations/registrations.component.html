@@ -1,0 +1,61 @@
+<header id="main-header" class="py-2 bg-warning text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>
+          <i class="fa fa-users"></i> Registrations</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="action" class="py-4 mb-4 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 ml-auto">
+        <div class="input-group">
+          <input type="text" #query (keyup)="filter(query.value)" class="form-control" placeholder="Search...">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="courses">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h4>Latest Registrations</h4>
+          </div>
+          <table class="table" *ngIf="filteredRegistrations?.length>0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Date Of Joining</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <tr *ngFor="let c of filteredRegistrations">
+                <td>{{c.student.name}}</td>
+                <td>{{c.course.name}}</td>
+                <td>{{c.joiningDate|date}}</td>
+                
+                <td>
+                  <a [routerLink]="['/registrations/',c._id]" class="btn btn-secondary">
+                    <i class="fa fa-angle-double-right"></i> Edit
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="text-align:center; margin: 10px;" *ngIf="filteredRegistrations?.length==0">No Registrations Availale at the moment</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

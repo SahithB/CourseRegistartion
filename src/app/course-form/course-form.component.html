@@ -1,0 +1,112 @@
+<header id="main-header" class="py-2 ml-auto bg-warning text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fa fa-book"></i> Course </h1>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="container py-4 px-5">
+  <div class="row">
+    <div class="col-md-6">
+      <form [formGroup]="form" (ngSubmit)="save()">
+        <div class="form-group">
+          <label for="name">Course Name</label>
+          <input class="form-control" formControlName="name" placeholder="Enter course name">
+          <div class="alert alert-danger" *ngIf="name.touched && !name.valid">
+            <div *ngIf="!!name.errors.required">
+              Name is required
+            </div>
+            <div *ngIf="!!name.errors.minlength || !!name.errors.maxlength ">
+              Name must be in the range of 3 to 55 characters long
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="faculty">Faculty</label>
+          <input class="form-control" formControlName="faculty" placeholder="Faculty Name">
+          <div class="alert alert-danger" *ngIf="faculty.touched && !faculty.valid">
+            <div *ngIf="!!faculty.errors.required">
+              Faculty is required
+            </div>
+            <div *ngIf="!!faculty.errors.minlength || !!faculty.errors.maxlength ">
+              Faculty name must be in the range of 3 to 55 characters long
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="fees">Fee</label>
+          <input type="number" class="form-control" formControlName="fees" placeholder="Fee">
+          <div class="alert alert-danger" *ngIf="fees.touched && !fees.valid">
+            <div *ngIf="!!fees.errors.required">
+              Fee is required
+            </div>
+            <div *ngIf="!!fees.errors.min">
+              Fee must be minimum 500
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="batchSizeAvl">Batch Size</label>
+          <input type="number" class="form-control" formControlName="batchSizeAvl" placeholder="Batch Size">
+          <div class="alert alert-danger" *ngIf="batchSizeAvl.touched && !batchSizeAvl.valid">
+            <div *ngIf="!!batchSizeAvl.errors.required">
+              Batch Size is required
+            </div>
+            <div *ngIf="!!batchSizeAvl.errors.min">
+              Min BatchSize is 5
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="duration">Duration</label>
+          <input type="number" class="form-control" formControlName="duration" placeholder="Duration in months">
+          <div class="alert alert-danger" *ngIf="duration.touched && !duration.valid">
+            <div *ngIf="!!duration.errors.required">
+              Duration Size is required
+            </div>
+            <div *ngIf="!!duration.errors.min">
+              Min Duration is 1 month
+            </div>
+          </div>
+        </div>
+        <div>
+          <label>EMI Availability</label>
+          <div class="radio">
+            <p>
+              <input type="radio" formControlName="isEMIAllowed" value=true> Yes
+
+              <input type="radio" formControlName="isEMIAllowed" value=false> No
+            </p>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="EMIAllowed">
+          <label class="control-label" for="EMI">Select EMI</label>
+          <div>
+            <select id="EMI" class="form-control" formControlName="allowedInstallments">
+              <option value=''>Select EMI</option>
+              <option value=3>3</option>
+              <option value=6>6</option>
+              <option value=9>9</option>
+              <option value=12>12</option>
+            </select>
+          </div>
+          <div class="alert alert-danger" *ngIf="allowedInstallments.touched && !allowedInstallments.valid">
+            <div *ngIf="!!allowedInstallments.errors.required">
+              EMI selection is required
+            </div>
+          </div>
+        </div>
+        <div class="m-auto">
+          <button type="submit" class="btn btn-primary mr-1">Save</button>
+          <button type="button" *ngIf="id" (click)="delete()" class="btn btn-danger mr-2">Delete</button>
+          <button type="reset" *ngIf="!id" class="btn btn-danger mr-2">Reset</button>
+        </div>
+      </form>
+    </div>
+    <div class=" container col-md-4 d-none d-lg-block" style="padding-top:5em">
+      <img class="img-responsive" src="assets/images/course.png" />
+    </div>
+  </div>
+</div>
