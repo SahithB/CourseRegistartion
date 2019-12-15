@@ -5,9 +5,10 @@ import { AppError } from './../common/app-error';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { timeout, catchError } from 'rxjs/operators';
 import { throwError  } from 'rxjs';
 import { Registration } from './../models/registration';
+import { UnexpectedError } from '../common/unexpected-error';
 
 
 @Injectable()
@@ -22,22 +23,22 @@ export class RegistrationService{
     }
 
     getAll():Observable<Registration[]> {
-        return this.http.get<Registration[]>(this.url,{headers:this.headers})
+        return this.http.get<Registration[]>(this.url,{headers:this.headers}).pipe(timeout(10000),catchError(this.handleError))
     }
     get(id):Observable<Registration> {
-        return this.http.get<Registration>(this.url + '/' +id,{headers:this.headers})
+        return this.http.get<Registration>(this.url + '/' +id,{headers:this.headers}).pipe(timeout(10000),catchError(this.handleError))
     }
 
     create(resource):Observable<Registration> {
-        return this.http.post<Registration>(this.url,resource,{headers:this.headers})
+        return this.http.post<Registration>(this.url,resource,{headers:this.headers}).pipe(timeout(10000),catchError(this.handleError))
     }
 
     update(resourceId,resource):Observable<Registration> {
-        return this.http.put<Registration>(this.url + '/' + resourceId,resource,{headers:this.headers})
+        return this.http.put<Registration>(this.url + '/' + resourceId,resource,{headers:this.headers}).pipe(timeout(10000),catchError(this.handleError))
     }
 
     delete(id):Observable<Registration> {
-        return this.http.delete<Registration>(this.url + '/' + id,{headers:this.headers})
+        return this.http.delete<Registration>(this.url + '/' + id,{headers:this.headers}).pipe(timeout(10000),catchError(this.handleError))
     }
 
     private handleError(error: Response) {
@@ -46,5 +47,6 @@ export class RegistrationService{
 
         if (error.status === 404)
             return throwError(new NotFoundError());
+        return throwError(new UnexpectedError());
    }
 }
